@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'TM_store.urls'
+ROOT_URLCONF = 'Huy_Fresh_Mart.urls'
 
 TEMPLATES = [
     {
