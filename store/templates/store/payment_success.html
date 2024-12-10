@@ -1,0 +1,20 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="success-container">
+    <h3 class="success-title">PAYMENT SUCCESSFUL</h3>
+    <div class="success-animation">
+        <img src="{% static 'images/giphy.gif' %}">
+    </div>
+    <div class="success-footer">
+        
+    </div>
+</div>
+
+<script>
+    setTimeout(function(){
+       window.location.href = "{% url 'cart' %}";
+    }, 4000);
+</script>
+{% endblock content %}

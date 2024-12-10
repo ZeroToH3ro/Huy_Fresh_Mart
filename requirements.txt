@@ -1,0 +1,5 @@
+Django==4.2.5
+pytz==2023.3
+Pillow==10.0.1
+djangorestframework==3.14.0
+qrcode==7.4.2

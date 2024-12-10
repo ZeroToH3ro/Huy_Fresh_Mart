@@ -1,0 +1,24 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="qr_code-container">
+    <div class="qr_code-box">
+        <h2 class="qr_code-title">SCAN QR HERE</h2>
+        <div id="qrCodeContainer">
+            <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+        </div>
+        <div class="qr_code-info">
+        </div>
+    </div>
+    <div class="qr_code-footer">
+        
+    </div>
+</div>
+
+<script>
+  setTimeout(function(){
+     window.location.href = "{% url 'success' %}";
+  }, 5000);
+</script>
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+    {% for list in lists %}
+    <div class="fadeInUp">
+        <img src="{{ list.image.url }}" class="album rotate">
+
+        <div class="span span1">Items</div>
+        <div class="card card__product bounce">
+            <span>{{ list.name }}</span>
+        </div>
+
+        <div class="span span2">Price</div>
+        <div class="card card__price">
+            <span>{{ list.price }}.000</span>
+        </div>
+
+        <div class="span span3">Weight</div>
+        <div class="card card__weight">
+            <span>{{ list.loadcell_value }}</span>
+        </div> 
+        
+        <div class="span span4">Payable</div>
+        <div class="card card__amount">
+            <span>{{ list.total|floatformat:2 }}</span>
+        </div>
+
+        <div class="span span5">
+            <button class="delete-button" data-id="{{list.id}}">Delete</button>
+        </div>
+    </div>
+    {% endfor %} 
+    <br>
+    <a href="{% url 'checkout' %}?random={{ random_number }}"><button type="submit" class="button">PAY {{ total_bill|floatformat:2 }} </button></a>
+    {% endblock content %}
