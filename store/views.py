@@ -1,11 +1,17 @@
+from django.core.mail import EmailMessage
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 import json
 import qrcode
+from django.template.loader import render_to_string
 from django.urls import reverse
 import datetime
+
+from django.utils.html import strip_tags
+
+from Huy_Fresh_Mart import settings
 from .models import *
 from .models import Product
 from rest_framework.decorators import api_view
@@ -64,6 +70,8 @@ def cart(request):
 def checkout(request):
     total_bill = request.session.get('total_bill')
     print(total_bill)
+
+    # Generate QR Code
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -71,17 +79,57 @@ def checkout(request):
         border=4,
     )
     global status_checkout
-    status_checkout =True
+    status_checkout = True
     qr.add_data(str(total_bill))
     qr.make(fit=True)
 
     img = qr.make_image(fill_color="black", back_color="white")
 
+    # Save QR code to buffer
     buffered = BytesIO()
     img.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
-    return render(request, 'store/checkout.html',{'qr_code':img_str,'total_bill': total_bill}) 
+    # Prepare email content
+    order_details = {
+        'order_number': f'ORD-{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}',
+        'total_bill': total_bill,
+        'date': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'items': aaa  # Your global cart items
+    }
+
+    # Render email template
+    html_message = render_to_string('store/email_template.html', {
+        'order': order_details,
+    })
+    plain_message = strip_tags(html_message)
+
+    try:
+        # Create email
+        email = EmailMessage(
+            subject=f'Order Confirmation #{order_details["order_number"]}',
+            body=html_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=['customer@example.com'],
+        )
+        email.content_subtype = 'html'
+
+        # Attach QR code
+        email.attach('qr_code.png', buffered.getvalue(), 'image/png')
+
+        # Send email
+        email.send(fail_silently=False)
+
+        print("Email sent successfully!")
+
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+
+    return render(request, 'store/checkout.html', {
+        'qr_code': img_str,
+        'total_bill': total_bill,
+        'order_number': order_details['order_number']
+    })
 
 aaa = []
 status_checkout = False
