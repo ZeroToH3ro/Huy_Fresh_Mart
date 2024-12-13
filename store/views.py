@@ -93,9 +93,10 @@ def checkout(request):
     # Prepare email content
     order_details = {
         'order_number': f'ORD-{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}',
-        'total_bill': total_bill,
+        'total_bill': sum(item['total'] for item in aaa),
         'date': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        'items': aaa  # Your global cart items
+        'items': aaa,
+        'total': len(aaa)
     }
 
     # Render email template

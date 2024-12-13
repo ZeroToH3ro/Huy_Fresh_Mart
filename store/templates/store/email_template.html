@@ -46,7 +46,7 @@
 
         <div class="order-details">
             <p><strong>Date:</strong> {{ order.date }}</p>
-            <p><strong>Order Total:</strong> ${{ order.total|floatformat:2 }}</p>
+            <p><strong>Order Total:</strong>{{ order.total|floatformat:2 }}</p>
         </div>
 
         <h2>Order Items</h2>
