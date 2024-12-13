@@ -46,7 +46,7 @@
 
         <div class="order-details">
             <p><strong>Date:</strong> {{ order.date }}</p>
-            <p><strong>Order Total:</strong> ${{ order.total_bill|floatformat:2 }}</p>
+            <p><strong>Order Total:</strong> ${{ order.total|floatformat:2 }}</p>
         </div>
 
         <h2>Order Items</h2>
@@ -72,7 +72,13 @@
         </table>
 
         <div class="total">
-            Total Amount: ${{ order.total_bill|floatformat:2 }}
+            Total Amount: ${% with total=0 %}
+                {% for item in order.items %}
+                    {% with total=total|add:item.total %}
+                    {% endwith %}
+                {% endfor %}
+                {{ total|floatformat:2 }}
+            {% endwith %}
         </div>
 
         <p>Thank you for your order!</p>
