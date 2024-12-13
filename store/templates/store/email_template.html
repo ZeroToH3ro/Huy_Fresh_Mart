@@ -72,13 +72,7 @@
         </table>
 
         <div class="total">
-            Total Amount: ${% with total=0 %}
-                {% for item in order.items %}
-                    {% with total=total|add:item.total %}
-                    {% endwith %}
-                {% endfor %}
-                {{ total|floatformat:2 }}
-            {% endwith %}
+            Total Amount: ${{ order.total_bill|floatformat:2 }}
         </div>
 
         <p>Thank you for your order!</p>
