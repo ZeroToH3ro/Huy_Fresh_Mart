@@ -24,7 +24,7 @@ body {
 }
 
 .logo img {
-  max-height: 70px;
+  max-height: 40px;
   margin-right: 10px;
 }
 
@@ -175,7 +175,7 @@ body {
 } */
 
 .button {
-  background: linear-gradient(135deg, #ff5722 0%, #ffc107 100%);
+  background: linear-gradient(135deg, #50b948 0%, #fbcc06 100%);
   padding: 10px 20px;
   border: none;
   border-radius: 30px;
@@ -194,7 +194,7 @@ body {
 .button:hover {
   transform: scale(1.1) translateY(-5px);
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(135deg, #ffc107 0%, #ff5722 100%);
+  background: linear-gradient(135deg, #50b948 0%, #fbcc06 100%);
   color: black;
 }
 
@@ -268,11 +268,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  height: 90vh;
   text-align: center;
   color: #333;
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
